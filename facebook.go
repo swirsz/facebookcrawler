@@ -1,13 +1,32 @@
 /* 
+	BATcave
+	facebook.go
+    
+	Author: Steven Wirsz
+	Last Updated: 05/01/2013
+    
+    http://golang.org/
+    http://www.mongodb.org/
 
-BATcave Facebook Crawler 
+    Extracts nonuser specific feed data from Facebook's Graph API and stores results in a MongoDB database. Does not require an OAuth access token.
 
-Extracts nonuser specific feed data from Facebook's Graph API and stores results in a MongoDB database. Does not require an OAuth access token.
+    Creates a priority queue of brands (brand) and also a priority queue of mentions (pq)
 
-Steven Wirsz
+    retrieveBrands - successfully iterates through the database and pushes all retrieved data into the stack.
 
-5/1/2013
+    crawler - pops the top brand off the priority queue, if the first pass, it exhaustively grabs all facebook data, if the second pass or later, it only scans new pages, clears up many duplicates as possible, uses insert to write the mentions to the database, updates the last crawl time to the current time, and then pushes the brand back onto the priority queue
 
+    PopMentions - removes all mentions from the queue, removes duplicates, and writes them to the database
+
+    updatebrands - pops all brands, removes them all from the priority queue, and writes them back to the database
+
+    database: establish connection with the MongoDB database (from Arbiter)
+    crawl: process one page of Facebook data and repeat
+    getnext: retrieves the "next" hyperlink on a page and returns it as a string
+    getuntil: retrieves the UNIX timestamp of the next page search results
+    convertdata: parses strings into integers, creates a struct of mentions
+    getdata/getmessage/getid/gettime: parses facebook results
+    fixspace: removes whitespaces in a string and substitutes it with %20
 */
 
 package main

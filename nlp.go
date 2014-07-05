@@ -5,6 +5,9 @@
 	Author: Steven Wirsz
 	Last Updated: 03/12/2013
 
+    http://golang.org/
+    http://www.mongodb.org/
+    
 	Updates sentiment field for each mention
 	
 	Requires: SentiWordNet_3.0.0.txt
